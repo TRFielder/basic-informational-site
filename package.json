@@ -1,0 +1,16 @@
+{
+  "name": "basic-informational-site",
+  "version": "1.0.0",
+  "description": "A basic site to practise NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "T Fielder",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^8.17.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0"
+  }
+}
