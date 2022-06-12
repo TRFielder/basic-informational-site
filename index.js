@@ -1,38 +1,19 @@
-const http = require("http");
-const fs = require("fs");
+const express = require("express");
+const app = express();
+const path = require("path");
+const PORT = 3000;
 
-const allFiles = fs.readdirSync("./", { withFileTypes: true });
-
-//Get the html files with a regex test, and generate ends for URLs based on their names
-const htmlFiles = allFiles
-  .filter((file) => {
-    return /^.*\.html$/gim.test(file.name);
+app.use(
+  express.static("public", {
+    extensions: ["html", "htm"],
   })
-  .map((file) => {
-    if (file.name === "index.html") {
-      return "";
-    } else {
-      return file.name.slice(0, file.name.length - 5);
-    }
-  });
+);
 
-const server = http.createServer((req, res) => {
-  const requestedURL = req.url.slice(1);
-  res.setHeader("Content-Type", "text/html");
-  if (htmlFiles.includes(requestedURL)) {
-    if (requestedURL === "") {
-      const file = fs.readFileSync("./index.html", "utf8");
-      res.end(file);
-    } else {
-      const file = fs.readFileSync("./" + requestedURL + ".html");
-      res.end(file);
-    }
-  } else {
-    const file = fs.readFileSync("./404.html", "utf8");
-    res.end(file);
-  }
+app.use((req, res) => {
+  res.status(404);
+  res.sendFile(path.join(__dirname, "public/404.html"));
 });
 
-server.listen(8080, () => {
-  console.log("Server connected");
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
